@@ -29,8 +29,9 @@ m = matrix(c(
   "outfile", "o", "1", "character", "output file (PDF)",
   "title", "t", "2", "character", "plot title (default = Boxplots)",
   "xlab", "x", "2", "character", "x-axys label (default = Groups)",
-  "ylab", "y", "2", "character", "y-axys label (default = Value)"
-), byrow=TRUE, ncol=5);
+  "ylab", "y", "2", "character", "y-axys label (default = Value)",
+  "rotate-labs", "r", "0", "logical", "rotate labels in vertical position (default = false)"
+ ), byrow=TRUE, ncol=5);
 opt = getopt(spec = m, opt = commandArgs(TRUE));
 
 # help:
@@ -40,10 +41,11 @@ if ( !is.null(opt$help) ) {
 }
 
 # defaults:
-if ( is.null(opt$"verbose" ) )	{ opt$"verbose" = FALSE; }
-if ( is.null(opt$"title") )     { opt$"title" = "Boxplots"; }
-if ( is.null(opt$"xlab") )      { opt$"xlab" = "Groups"; }
-if ( is.null(opt$"ylab") )      { opt$"ylab" = "Value"; }
+if ( is.null(opt$"verbose" ) )		{ opt$"verbose" = FALSE; }
+if ( is.null(opt$"title") )     	{ opt$"title" = "Boxplots"; }
+if ( is.null(opt$"xlab") )      	{ opt$"xlab" = "Groups"; }
+if ( is.null(opt$"ylab") )      	{ opt$"ylab" = "Value"; }
+if ( is.null(opt$"rotate-labs" ) )	{ opt$"rotate-labs" = FALSE; }
 
 # print values:
 if (opt$"verbose"==TRUE) 			{ print(opt); }
@@ -72,12 +74,20 @@ if(file.exists(opt$"infile")) {
 #----------------------- MAKING PLOT:
 if (opt$"verbose"==TRUE) { verbose("Making plot") };
 pdf(file=opt$"outfile");
+
+my_las=1;
+if(opt$"rotate-labs"==TRUE) {
+	par(xpd=T, mar=par()$mar+c(5,0,0,0));
+	my_las=2;
+} else {
+	my_las=1;
+}
 boxplot(data, 
 		cex.names=0.7,
 		xlab=opt$"xlab", 
 		ylab=opt$"ylab", 
 		main=opt$"title", 
-		las=1,
+		las=my_las,
 		outline = FALSE);
 dev.off();
 
