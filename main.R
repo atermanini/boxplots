@@ -27,7 +27,7 @@ m = matrix(c(
   "help"   , "h", "0", "logical", "this help",
   "infile",  "i", "1", "character", "input file (tab-delimited with one line of header)",
   "outfile", "o", "1", "character", "output file (PDF)",
-  "title", "t", "2", "character", "plot title (default = Beeswarm Plot)",
+  "title", "t", "2", "character", "plot title (default = Boxplots)",
   "xlab", "x", "2", "character", "x-axys label (default = Groups)",
   "ylab", "y", "2", "character", "y-axys label (default = Value)"
 ), byrow=TRUE, ncol=5);
